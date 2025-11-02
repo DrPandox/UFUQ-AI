@@ -4,8 +4,26 @@
 
 ### A Fully Functional AI Chat Application Powered by Google's Gemini
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Try_it_Now-2ea44f?style=for-the-badge)](https://geminiclonebygouranga.netlify.app/)
+---
 
+<div align="center">
+  
+  [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/GourangaDasSamrat/Gemini-Clone)
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/GourangaDasSamrat/Gemini-Clone)
+  
+  <a href=""><strong>✨ View Live Demo »</strong></a>
+
+</div>
+  <p style="margin-top:16px;">
+    <a href="https://deepwiki.com/GourangaDasSamrat/Gemini-Clone" title="Detailed documentation on DeepWiki">
+      <img alt="DeepWiki Docs" src="https://img.shields.io/badge/Documentation-DeepWiki-4B79FF?style=for-the-badge&logo=readthedocs&logoColor=white" />
+    </a>
+  </p>
+  <p><em>For detailed documentation, guides, and configuration notes — visit the DeepWiki page above.</em></p>
+</div>
+
+---
 [![Netlify Status](https://api.netlify.com/api/v1/badges/bc4b3983-806a-43bc-8475-e87efc44e157/deploy-status)](https://app.netlify.com/projects/geminiclonebygouranga/deploys)
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)
 [![GitHub Stars](https://img.shields.io/github/stars/GourangaDasSamrat/Gemini-Clone?style=social)](https://github.com/GourangaDasSamrat/Gemini-Clone)
@@ -266,3 +284,4 @@ If you like this project, please give it a ⭐ on GitHub!
 Have suggestions or want to contribute? Feel free to open an issue or reach out to me through my social profiles.
 
 **Happy Programming!**
+
