@@ -19,7 +19,7 @@ hljs.configure({
 // Initialize highlight.js
 hljs.highlightAll();
 
-const API_REQUEST_URL = `${config.API_BASE_URL}/models/${config.MODEL_NAME}:generateContent?key=${config.GEMINI_API_KEY}`;
+const API_REQUEST_URL = `${config.API_BASE_URL}/chat/completions`;
 
 // Load saved data from local storage
 const loadSavedChatHistory = () => {
@@ -54,7 +54,7 @@ const loadSavedChatHistory = () => {
 
     // Display the API response
     const responseText =
-      conversation.apiResponse?.candidates?.[0]?.content?.parts?.[0]?.text;
+      conversation.apiResponse.choices[0].message.content;
     const parsedApiResponse = marked.parse(responseText); // Convert to HTML
     const rawApiResponse = responseText; // Plain text version
 
@@ -150,17 +150,22 @@ const requestApiResponse = async (incomingMessageElement) => {
   try {
     const response = await fetch(API_REQUEST_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${config.GOOGLE_AI_API_KEY}`
+      },
       body: JSON.stringify({
-        contents: [{ role: "user", parts: [{ text: currentUserMessage }] }],
+        model: config.MODEL_NAME,
+        messages: [{ role: "user", content: currentUserMessage }],
+        max_tokens: config.MAX_TOKENS,
+        temperature: config.TEMPERATURE,
       }),
     });
 
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.error.message);
 
-    const responseText =
-      responseData?.candidates?.[0]?.content?.parts?.[0]?.text;
+    const responseText = responseData.choices[0].message.content;
     if (!responseText) throw new Error("Invalid API response.");
 
     const parsedApiResponse = marked.parse(responseText);
