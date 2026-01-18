@@ -475,3 +475,11 @@ blockquote{
     }
 
 }
+
+/* Error message styling */
+.error-message {
+  margin-top: 10px;
+  color: red;
+  font-size: 14px;
+  text-align: center;
+}

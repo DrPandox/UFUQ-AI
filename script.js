@@ -5,6 +5,24 @@ const suggestionItems = document.querySelectorAll(".suggests__item");
 const themeToggleButton = document.getElementById("themeToggler");
 const clearChatButton = document.getElementById("deleteButton");
 
+// Blacklist of bad words
+const badWords = [
+  // General inappropriate
+  "badword1", "badword2", "stupid", "idiot", "hate", "damn", "hell", "ass", "fuck", "shit",
+  // Terrorist/violent words
+  "gun", "explosive", "bomb", "terrorist", "kill", "murder", "attack", "jihad", "isis", "al-qaeda",
+  "weapon", "rifle", "pistol", "knife", "poison", "nuclear", "chemical", "biological", "suicide",
+  "assassinate", "slaughter", "massacre", "genocide", "war", "violence", "threat", "intimidate",
+  // Pornography/sexual content
+  "sex", "porn", "nude", "naked", "tits", "boobs", "dick", "cock", "pussy", "vagina", "penis",
+  "orgasm", "masturbate", "blowjob", "handjob", "anal", "oral", "cum", "sperm", "ejaculate",
+  "fetish", "bdsm", "bondage", "rape", "molenpm sst", "incest", "pedophile", "child porn", "bestiality",
+  "prostitute", "whore", "slut", "bitch", "cunt", "fag", "nigger", "kike", "chink", "spic"
+];
+
+// Error message element
+const errorMessageElement = document.getElementById("error-message");
+
 // State variables
 let currentUserMessage = null;
 let isGeneratingResponse = false;
@@ -40,7 +58,6 @@ const loadSavedChatHistory = () => {
     const userMessageHtml = `
 
             <div class="message__content">
-                <img class="message__avatar" src="assets/profile.png" alt="User avatar">
                <p class="message__text">${conversation.userMessage}</p>
             </div>
 
@@ -61,7 +78,7 @@ const loadSavedChatHistory = () => {
     const responseHtml = `
 
            <div class="message__content">
-                <img class="message__avatar" src="assets/gemini.svg" alt="Gemini avatar">
+                <img class="message__avatar" src="assets/Logo.png" alt="Gemini avatar">
                 <p class="message__text"></p>
                 <div class="message__loading-indicator hide">
                     <div class="message__loading-bar"></div>
@@ -274,11 +291,37 @@ const copyMessageToClipboard = (copyButton) => {
   ); // Revert icon after 1 second
 };
 
+// Function to check if message contains bad words
+const containsBadWord = (message) => {
+  const lowerMessage = message.toLowerCase();
+  return badWords.some(word => lowerMessage.includes(word.toLowerCase()));
+};
+
+// Function to show error message
+const showError = (message) => {
+  errorMessageElement.textContent = message;
+  errorMessageElement.style.display = "block";
+};
+
+// Function to hide error message
+const hideError = () => {
+  errorMessageElement.style.display = "none";
+};
+
 // Handle sending chat messages
 const handleOutgoingMessage = () => {
-  currentUserMessage =
-    messageForm.querySelector(".prompt__form-input").value.trim() ||
-    currentUserMessage;
+  const userMessage = messageForm.querySelector(".prompt__form-input").value.trim();
+
+  // Check for bad words
+  if (containsBadWord(userMessage)) {
+    showError("Your message contains inappropriate content. Please rephrase.");
+    return;
+  }
+
+  // Clear any previous error
+  hideError();
+
+  currentUserMessage = userMessage;
   if (!currentUserMessage || isGeneratingResponse) return; // Exit if no message or already generating response
 
   isGeneratingResponse = true;
